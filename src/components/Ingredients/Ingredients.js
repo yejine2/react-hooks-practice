@@ -12,23 +12,8 @@ const Ingredients = () => {
   /* useEffect() 첫번째 인수: 렌더링이 끝난 뒤에 실행되는 함수, 
   두번째 인수: 함수에서 사용하는 의존성(dependencies)이 저장된 배열, 이 의존성 배열이 변경될 때만 함수가 다시 실행
   빈 배열이면 컴포넌트가 처음 렌더링될 때만 실행 그 후로는 절대 실행되지 않는다.*/
-  useEffect(() => {
-    fetch(
-      "https://react-hooks-update-a3dd5-default-rtdb.firebaseio.com/ingredients.json"
-    )
-      .then((response) => response.json())
-      .then((responseData) => {
-        const loadedIngredients = [];
-        for (const key in responseData) {
-          loadedIngredients.push({
-            id: key,
-            title: responseData[key].title,
-            amount: responseData[key].amount,
-          });
-        }
-        setUserIngredients(loadedIngredients);
-      });
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   /* useCallback 함수는 다시 실행되지 않고 리액트는 리렌더링되어도 남아있도록 이 함수를 캐싱(cache)한다. 
    Ingredients 컴포넌트가 리렌더링되어도 이 함수는 새로 생성되지 않기 때문에 값이 변하지 않는다. */
