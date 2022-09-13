@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
@@ -30,10 +30,12 @@ const Ingredients = () => {
       });
   }, []);
 
+  /* useCallback 함수는 다시 실행되지 않고 리액트는 리렌더링되어도 남아있도록 이 함수를 캐싱(cache)한다. 
+   Ingredients 컴포넌트가 리렌더링되어도 이 함수는 새로 생성되지 않기 때문에 값이 변하지 않는다. */
   // Search 컴포넌트에서 onLoadIngredients가 호출됐을 때 실행할 함수
-  const filteredIngredientsHandler = (filteredIngredients) => {
+  const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     setUserIngredients(filteredIngredients);
-  };
+  }, []);
 
   // Firebase 연결
   const addIngredientHandler = (ingredient) => {

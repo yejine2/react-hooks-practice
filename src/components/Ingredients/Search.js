@@ -31,7 +31,7 @@ const Search = React.memo((props) => {
           });
         }
         // Ingredients 컴포넌트에 props 전달
-        // onLoadIngredients(loadedIngredients);
+        onLoadIngredients(loadedIngredients);
       });
   }, [enteredFilter, onLoadIngredients]);
 
