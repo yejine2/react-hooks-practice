@@ -9,17 +9,29 @@ const Ingredients = () => {
   // 재료가 추가되거나 삭제될 경우에 전체가 업데이트
   const [userIngredients, setUserIngredients] = useState([]);
 
-  // 기존에 있던 ingredients 목록에 새로 받은 값을 추가해 업데이트 하기
-  // prevIngredients는 현재 state이다.
-  // id, title, amount를 가진 새로운 객체가 ingredients 목록에 추가
+  // Firebase 연결
   const addIngredientHandler = (ingredient) => {
-    setUserIngredients((prevIngredients) => [
-      ...prevIngredients,
+    fetch(
+      "https://react-hooks-update-a3dd5-default-rtdb.firebaseio.com/ingredients.json",
       {
-        id: Math.random().toString(),
-        ...ingredient,
-      },
-    ]);
+        method: "POST",
+        body: JSON.stringify(ingredient),
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      // Firebase가 responseData를 반환하고 반환된 데이터는 객체이며, 그 안에 name 프로퍼티가 있고, 그 name 프로퍼티에는 Firebase가 생성한 고유한 ID가 들어있다.
+      .then((responseData) => {
+        setUserIngredients((prevIngredients) => [
+          ...prevIngredients,
+          {
+            id: responseData.name,
+            ...ingredient,
+          },
+        ]);
+      });
   };
 
   return (
