@@ -4,9 +4,10 @@ import Card from "../UI/Card";
 import "./IngredientForm.css";
 
 const IngredientForm = React.memo((props) => {
-  // title과 amount의 입력값에 사용될 state
-  // input의 요소값은 문자열이기 때문에 문자열로 초기화
-  const [inputState, setInputState] = useState({ title: "", amount: "" });
+  /* state를 여러 개로 분리해서 사용. 
+  객체나 배열 형태의 state는 여러 데이터가 동시에 변경되거나, 여러 데이터를 동시에 변경하고 싶은 경우에만 사용 */
+  const [enteredTitle, setEnterdTitle] = useState("");
+  const [enteredAmount, setEnterdAmount] = useState("");
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -22,13 +23,9 @@ const IngredientForm = React.memo((props) => {
             <input
               type="text"
               id="title"
-              value={inputState.title}
+              value={enteredTitle}
               onChange={(event) => {
-                const newTitle = event.target.value;
-                setInputState((prevInputState) => ({
-                  title: newTitle,
-                  amount: prevInputState.amount,
-                }));
+                setEnterdTitle(event.target.value);
               }}
             />
           </div>
@@ -37,14 +34,9 @@ const IngredientForm = React.memo((props) => {
             <input
               type="number"
               id="amount"
-              value={inputState.amount}
-              // 새로운 객체를 inputState에 전달해 현재 상태를 새로운 객체의 데이터로 업데이트
+              value={enteredAmount}
               onChange={(event) => {
-                const newAmount = event.target.value;
-                setInputState((prevInputState) => ({
-                  amount: newAmount,
-                  title: prevInputState.title,
-                }));
+                setEnterdAmount(event.target.value);
               }}
             />
           </div>
