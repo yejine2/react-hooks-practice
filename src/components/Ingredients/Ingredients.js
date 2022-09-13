@@ -30,6 +30,11 @@ const Ingredients = () => {
       });
   }, []);
 
+  // Search 컴포넌트에서 onLoadIngredients가 호출됐을 때 실행할 함수
+  const filteredIngredientsHandler = (filteredIngredients) => {
+    setUserIngredients(filteredIngredients);
+  };
+
   // Firebase 연결
   const addIngredientHandler = (ingredient) => {
     fetch(
@@ -61,7 +66,7 @@ const Ingredients = () => {
       <IngredientForm onAddIngredient={addIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={filteredIngredientsHandler} />
         <IngredientList ingredients={userIngredients} onRemoveItem={() => {}} />
       </section>
     </div>
